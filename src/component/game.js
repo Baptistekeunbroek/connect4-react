@@ -51,6 +51,7 @@ const Game = () => {
 
   const handleUsePower = (power) => {
     const playerPowers = { ...powers[currentPlayer] };
+    console.log(playerPowers, "playerPowers");
 
     if (playerPowers[power] > 0) {
       setSelectedPower(power);
@@ -68,7 +69,6 @@ const Game = () => {
           newTable[i][column] = ".";
         }
       }
-
       let lowestAvailableRow = -1;
       for (let i = rows - 1; i >= 0; i--) {
         if (newTable[i][column] === ".") {
@@ -76,10 +76,36 @@ const Game = () => {
           break;
         }
       }
-
       if (lowestAvailableRow !== -1) {
         newTable[lowestAvailableRow][column] = "A";
         console.log(newTable, "tableAnvil");
+      }
+      setGameTable(newTable);
+      const playerPowers = { ...powers[currentPlayer] };
+      playerPowers[selectedPower]--;
+      setPowers({ ...powers, [currentPlayer]: playerPowers });
+
+      setSelectedPower(null);
+      togglePlayer();
+    } else if (selectedPower === "racecar") {
+      const newTable = gameTable.map((row) => [...row]);
+
+      for (let i = column; i < columns; i++) {
+        if (newTable[row][i] !== "." && newTable[row][i] !== "A") {
+          newTable[row][i] = ".";
+        }
+      }
+
+      let lowestAvailableColumn = -1;
+      for (let i = columns - 1; i >= 0; i--) {
+        if (newTable[row][i] === ".") {
+          lowestAvailableColumn = i;
+          break;
+        }
+      }
+
+      if (lowestAvailableColumn !== -1) {
+        newTable[row][lowestAvailableColumn] = "C";
       }
 
       setGameTable(newTable);
