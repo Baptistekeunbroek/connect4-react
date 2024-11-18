@@ -1,0 +1,32 @@
+
+.cell {
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 1rem;
+    margin: 1rem;
+    border: 2px solid gray;
+    box-shadow: inset 3px 4px 5px gray;
+  }
+  
+  .cell-x {
+    background-color: #f5d625;
+  }
+  
+  .cell-o {
+    background-color: #de3145;
+  }
+
+  .cell-anvil {
+    background-color: #555555; /* Example dark gray for an anvil */
+    box-shadow: inset 3px 4px 5px #333333;
+  }
+  
+  .cell p{
+    display: none;
+  }

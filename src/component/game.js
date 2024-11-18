@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Board from "./board";
 import Controls from "./controls";
+import "./game.css";
 
 const Game = () => {
   const [rows, setRows] = useState(6);
@@ -16,6 +17,17 @@ const Game = () => {
     O: { anvil: 1, racecar: 1 },
   });
   const [selectedPower, setSelectedPower] = useState(null);
+  const [showModal, setShowModal] = useState(true);
+
+  const handleGridSizeSelection = (cols) => {
+    setColumns(cols);
+    setGameTable(
+      Array(rows)
+        .fill(null)
+        .map(() => Array(cols).fill("."))
+    );
+    setShowModal(false);
+  };
 
   const handleDropToken = (row, column) => {
     const newTable = gameTable.map((row) => [...row]);
@@ -50,9 +62,13 @@ const Game = () => {
   const handleCellClick = (row, column) => {
     if (selectedPower === "anvil") {
       const newTable = gameTable.map((row) => [...row]);
+
       for (let i = row; i < rows; i++) {
-        newTable[i][column] = ".";
+        if (newTable[i][column] !== "A") {
+          newTable[i][column] = ".";
+        }
       }
+
       let lowestAvailableRow = -1;
       for (let i = rows - 1; i >= 0; i--) {
         if (newTable[i][column] === ".") {
@@ -63,7 +79,9 @@ const Game = () => {
 
       if (lowestAvailableRow !== -1) {
         newTable[lowestAvailableRow][column] = "A";
+        console.log(newTable, "tableAnvil");
       }
+
       setGameTable(newTable);
 
       const playerPowers = { ...powers[currentPlayer] };
@@ -90,7 +108,6 @@ const Game = () => {
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < columns; j++) {
         if (table[i][j] === currentPlayer) {
-          // Horizontal
           if (
             j + 3 < columns &&
             table[i][j] === currentPlayer &&
@@ -101,7 +118,6 @@ const Game = () => {
             return true;
           }
 
-          // Vertical
           if (
             i + 3 < rows &&
             table[i][j] === currentPlayer &&
@@ -112,7 +128,6 @@ const Game = () => {
             return true;
           }
 
-          // Diagonal bottom-right
           if (
             i + 3 < rows &&
             j + 3 < columns &&
@@ -124,7 +139,6 @@ const Game = () => {
             return true;
           }
 
-          // Diagonal bottom-left
           if (
             i + 3 < rows &&
             j - 3 >= 0 &&
@@ -143,15 +157,37 @@ const Game = () => {
 
   return (
     <div>
-      <h1>Connect 4/5</h1>
-      <Controls
-        currentPlayer={currentPlayer}
-        powers={powers[currentPlayer]}
-        onUsePower={(power) => handleUsePower(power)}
-        onReset={resetGame}
-      />
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h2>Choose Grid Size</h2>
+            <button
+              className="grid-button"
+              onClick={() => handleGridSizeSelection(7)}
+            >
+              6 x 7 Grid
+            </button>
+            <button
+              className="grid-button"
+              onClick={() => handleGridSizeSelection(9)}
+            >
+              6 x 9 Grid
+            </button>
+          </div>
+        </div>
+      )}
 
-      <Board gameTable={gameTable} onDropToken={handleCellClick} />
+      {!showModal && (
+        <>
+          <Controls
+            currentPlayer={currentPlayer}
+            powers={powers[currentPlayer]}
+            onUsePower={(power) => handleUsePower(power)}
+            onReset={resetGame}
+          />
+          <Board gameTable={gameTable} onDropToken={handleCellClick} />
+        </>
+      )}
     </div>
   );
 };

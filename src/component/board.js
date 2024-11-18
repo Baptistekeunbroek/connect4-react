@@ -1,20 +1,22 @@
 import React from "react";
 import Cell from "./cell";
+import "./board.css";
 
 const Board = ({ gameTable, onDropToken }) => {
+  const columns = gameTable[0].length;
+  const gridClass = `grid-${columns}`;
+
   return (
-    <div className="board">
-      {gameTable.map((row, rowIndex) => (
-        <div key={rowIndex} className="row">
-          {row.map((cell, columnIndex) => (
-            <Cell
-              key={`${rowIndex}-${columnIndex}`}
-              value={cell}
-              onDrop={() => onDropToken(rowIndex, columnIndex)}
-            />
-          ))}
-        </div>
-      ))}
+    <div className={`board ${gridClass}`}>
+      {gameTable.map((row, rowIndex) =>
+        row.map((cell, columnIndex) => (
+          <Cell
+            key={`${rowIndex}-${columnIndex}`}
+            value={cell}
+            onDrop={() => onDropToken(rowIndex, columnIndex)}
+          />
+        ))
+      )}
     </div>
   );
 };

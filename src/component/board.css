@@ -1,0 +1,16 @@
+.board {
+    display: grid;
+    background-color: #296acc;
+    border-radius: 10px;
+    margin: 1rem;
+    grid-gap: 5px;
+    justify-items: center;
+  }
+  
+  .grid-7 {
+    grid-template-columns: repeat(7, 1fr);
+  }
+  
+  .grid-9 {
+    grid-template-columns: repeat(9, 1fr);
+  }
