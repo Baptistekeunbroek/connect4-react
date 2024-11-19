@@ -69,6 +69,22 @@ export const handleCellClick = (
   } else {
     const newTable = gameTable.map((row) => [...row]);
 
+    if (newTable[row][column] !== ".") {
+      for (let i = row; i > 0; i--) {
+        newTable[i][column] = newTable[i - 1][column];
+      }
+      newTable[0][column] = ".";
+
+      setGameTable(newTable);
+
+      if (checkWinner(newTable, currentPlayer, rows, columns)) {
+        alert(`Player ${currentPlayer} wins!`);
+      } else {
+        togglePlayer();
+      }
+      return;
+    }
+
     for (let i = rows - 1; i >= 0; i--) {
       if (newTable[i][column] === ".") {
         newTable[i][column] = currentPlayer;
