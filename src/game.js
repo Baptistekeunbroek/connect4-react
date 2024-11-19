@@ -44,7 +44,11 @@ const Game = () => {
     setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
 
   const resetGame = () => {
-    setGameTable(Array(6).fill(Array(7).fill(".")));
+    setGameTable(
+      Array(rows)
+        .fill(null)
+        .map(() => Array(columns).fill("."))
+    );
     setCurrentPlayer("X");
     setPowers({ X: { anvil: 1, racecar: 1 }, O: { anvil: 1, racecar: 1 } });
   };
