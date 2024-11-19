@@ -5,6 +5,7 @@ const Controls = ({ currentPlayer, powers, onUsePower, onReset }) => {
   return (
     <div className="controls">
       <h2 className="controls-title">Player {currentPlayer}'s Turn</h2>
+      <p>You can place a token, remove an existing one or use a power !</p>
       <div className="powers">
         <button
           onClick={() => onUsePower("anvil")}
