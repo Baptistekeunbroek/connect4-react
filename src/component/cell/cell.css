@@ -15,10 +15,14 @@
   
   .cell-x {
     background-color: #f5d625;
+    animation: drop 0.5s ease-in;
+
   }
   
   .cell-o {
     background-color: #de3145;
+    animation: drop 0.5s ease-in;
+
   }
   
   .cell-anvil {
@@ -27,6 +31,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    animation: drop 0.5s ease-in;
+
+  }
+  @keyframes drop {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
   }
   
   .cell-racecar {
@@ -35,6 +49,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    animation: drop 0.5s ease-in;
+
   }
   
   .cell i {
